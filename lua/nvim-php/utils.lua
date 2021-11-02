@@ -32,4 +32,13 @@ M.getProperties = function(bufnr)
   return properties;
 end
 
+M.getWindowSize = function()
+  local ui_config = vim.api.nvim_list_uis()[1];
+
+  return {
+    w = ui_config.width,
+    h = ui_config.height
+  };
+end
+
 return M;

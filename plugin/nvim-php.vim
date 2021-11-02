@@ -8,7 +8,7 @@
 let g:php_nvim_value = 42
 let g:php_nvim_value2 = 666
 
-nnoremap <leader>pg :lua require("nvim-php").generateGetters()<CR>
+nnoremap <leader>pg :lua require("nvim-php.getset").generateGetters()<CR>
 
 augroup PHP
     autocmd!

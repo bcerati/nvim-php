@@ -1,61 +1,7 @@
-local popup = require("popup")
-local ts_utils = require("nvim-treesitter.ts_utils")
-local ts_parsers = require("nvim-treesitter.parsers")
-local utils = require("nvim-php.utils")
 local M = {};
-
-local function getWindowSize()
-  local ui_config = vim.api.nvim_list_uis()[1];
-
-  return {
-    w = ui_config.width,
-    h = ui_config.height
-  };
-end
 
 M.onWindowResize = function()
   print("Helo World");
-end
-
-M.generateGetters = function ()
-  local bufnr = vim.api.nvim_get_current_buf();
-  local properties = utils.getProperties(bufnr);
-  local win_size = getWindowSize();
-
-  local rest_width = win_size["w"] - 70;
-  local rest_height = win_size["h"] - (#properties + 5);
-
-  local bufh = vim.api.nvim_create_buf(false, false);
-
-  popup.create(bufh, {
-    title = "Generate getters",
-    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-    line = rest_height / 2,
-    col = rest_width / 2,
-    minwidth = 70,
-    minheight = 10,
-  })
-
-  local content = {}
-  for _, property in pairs(properties) do
-    table.insert(content, property["name"] .. " : " .. property["types"])
-  end
-
-  vim.api.nvim_buf_set_lines(bufh, 0, #content, false, content)
-
-  vim.api.nvim_buf_set_keymap(
-      bufh,
-      "n",
-      "<CR>",
-      ":lua print(\"Hello World Boris!\")<CR>",
-      {}
-  )
-end
-
-M.selectGenerationLine = function()
-  local idx = vim.fn.line(".")
-
-  print("Going to " .. idx);
 end
 
 return M;
